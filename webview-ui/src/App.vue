@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { provideVSCodeDesignSystem, vsCodeButton } from "@vscode/webview-ui-toolkit";
 import { vscode } from "./utilities/vscode";
+import Mods from "@/Mods.vue";
 
 // In order to use the Webview UI Toolkit web components they
 // must be registered with the browser (i.e. webview) using the
@@ -33,6 +34,7 @@ function handleHowdyClick() {
   <main>
     <h1>Hello world!</h1>
     <vscode-button @click="handleHowdyClick">Howdy!</vscode-button>
+    <Mods></Mods>
   </main>
 </template>
 
