@@ -1,0 +1,18 @@
+version="2.5"
+tags={
+	"Character Interactions"
+	"Character Focuses"
+	"Gameplay"
+	"Balance"
+	"Decisions"
+	"Events"
+	"Graphics"
+	"Portraits"
+	"Fixes"
+	"Total Conversion"
+}
+name="Lifespan Traits"
+picture="thumbnail.png"
+supported_version="1.*"
+path="C:/Program Files (x86)/Steam/steamapps/workshop/content/1158310/2692655730"
+remote_file_id="2692655730"
