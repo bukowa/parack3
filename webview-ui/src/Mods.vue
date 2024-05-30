@@ -25,13 +25,7 @@ export default defineComponent({
   },
   data() {
     return {
-      mods: [
-        { id: 1, name: "Mod 1" },
-        { id: 2, name: "Mod 2" },
-        { id: 3, name: "Mod 3" },
-        { id: 4, name: "Mod 4" },
-        { id: 5, name: "Mod 5" },
-      ],
+      mods: __DEV_MODS__,
     };
   },
 });

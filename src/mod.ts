@@ -1,7 +1,6 @@
 import * as fs from "fs";
 import * as ini from "ini";
 import * as path from "path";
-import * as vscode from "vscode";
 
 `
 version="3.2.14"
@@ -82,18 +81,8 @@ export function parseMods(modsDir: string) {
 
   iterateFiles(modsDir, function(dirPath: string, filePath: string, stats: fs.Stats) {
     const mod = new Mod(path.join(dirPath, filePath));
-    console.log(mod);
     mods.push(mod);
   });
 
   return mods;
-}
-
-export function getWorkspacePath(context: vscode.ExtensionContext): string {
-  const workspaceFolders = vscode.workspace.workspaceFolders;
-  if (workspaceFolders && workspaceFolders.length > 0) {
-    return workspaceFolders[0].uri.fsPath;
-  } else {
-    throw new Error("No workspace folder found");
-  }
 }

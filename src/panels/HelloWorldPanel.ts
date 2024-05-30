@@ -1,7 +1,8 @@
 import { Disposable, Webview, WebviewPanel, window, Uri, ViewColumn, ExtensionContext } from "vscode";
 import { getUri } from "../utilities/getUri";
 import { getNonce } from "../utilities/getNonce";
-import { getWorkspacePath, readFileJson } from "../mod";
+import {readFileJson } from "../mod";
+import { getWorkspacePath } from "../utilities/getFiles";
 
 /**
  * This class manages the state and behavior of HelloWorld webview panels.
