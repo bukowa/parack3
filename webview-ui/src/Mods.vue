@@ -10,9 +10,9 @@ export default defineComponent({
   },
   mounted() {
     console.log("Mounted");
-    window.addEventListener('message', this.handleMessage)
+    window.addEventListener("message", this.handleMessage);
   },
-  methods:{
+  methods: {
     handleMessage(event: MessageEvent) {
       console.log("Received message", event.data);
     },
@@ -21,7 +21,15 @@ export default defineComponent({
         command: "hello",
         text: message,
       });
-    }
+    },
+  },
+  computed: {
+    dragOptions() {
+      return {
+        animation: 200,
+        ghostClass: "ghost",
+      };
+    },
   },
   data() {
     return {
@@ -33,36 +41,46 @@ export default defineComponent({
 
 <template>
   <div class="draggable-container">
-    <draggable v-model="mods" item-key="id">
-      <template #item="{element}">
-        <div class="draggable-item"> {{ element.name }}</div>
-      </template>
-    </draggable>
+    <table class="table">
+      <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Version</th>
+        <th>Supported Version</th>
+      </tr>
+      </thead>
+      <draggable v-model="mods" tag="tbody" v-bind="dragOptions">
+        <template #item="{element}">
+          <tr class="draggable-item">
+            <td>{{ element.remote_file_id }}</td>
+            <td>{{ element.name }}</td>
+            <td>{{ element.version }}</td>
+            <td>{{ element.supported_version }}</td>
+          </tr>
+        </template>
+      </draggable>
+    </table>
+
   </div>
   <button @click="sendMessage('HELLO')">Send Message</button>
 </template>
 
 <style scoped>
-/* Style the draggable container */
+
 .draggable-container {
   border: 1px solid #ccc;
-  padding: 10px;
-  border-radius: 5px;
-  background-color: #f9f9f9; /* Add background color */
+  padding: 15px;
+  width: 90%;
+  margin: 0 auto;
 }
 
-/* Style the draggable items */
 .draggable-item {
   cursor: grab;
-  background-color: #f4f4f4;
-  padding: 10px;
-  margin-bottom: 5px;
-  border: 1px solid #ddd;
-  border-radius: 3px;
 }
 
-/* Style the dragged item */
-.draggable-item.dragging {
+.ghost {
   opacity: 0.5;
+  background: cornflowerblue;
 }
 </style>
