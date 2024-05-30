@@ -1,6 +1,7 @@
-import { Disposable, Webview, WebviewPanel, window, Uri, ViewColumn } from "vscode";
+import { Disposable, Webview, WebviewPanel, window, Uri, ViewColumn, ExtensionContext } from "vscode";
 import { getUri } from "../utilities/getUri";
 import { getNonce } from "../utilities/getNonce";
+import { getWorkspacePath, readFileJson } from "../mod";
 
 /**
  * This class manages the state and behavior of HelloWorld webview panels.
@@ -16,22 +17,22 @@ export class HelloWorldPanel {
   public static currentPanel: HelloWorldPanel | undefined;
   readonly _panel: WebviewPanel;
   private _disposables: Disposable[] = [];
-
+  private _context: ExtensionContext;
   /**
    * The HelloWorldPanel class private constructor (called only from the render method).
    *
    * @param panel A reference to the webview panel
    * @param extensionUri The URI of the directory containing the extension
    */
-  private constructor(panel: WebviewPanel, extensionUri: Uri) {
+  private constructor(panel: WebviewPanel, context: ExtensionContext) {
     this._panel = panel;
-
+    this._context = context;
     // Set an event listener to listen for when the panel is disposed (i.e. when the user closes
     // the panel or when the panel is closed programmatically)
     this._panel.onDidDispose(() => this.dispose(), null, this._disposables);
 
     // Set the HTML content for the webview panel
-    this._panel.webview.html = this._getWebviewContent(this._panel.webview, extensionUri);
+    this._panel.webview.html = this._getWebviewContent(this._panel.webview, context.extensionUri);
 
     // Set an event listener to listen for messages passed from the webview context
     this._setWebviewMessageListener(this._panel.webview);
@@ -41,9 +42,9 @@ export class HelloWorldPanel {
    * Renders the current webview panel if it exists otherwise a new webview panel
    * will be created and displayed.
    *
-   * @param extensionUri The URI of the directory containing the extension.
+   * @param context
    */
-  public static render(extensionUri: Uri) {
+  public static render(context: ExtensionContext) {
     if (HelloWorldPanel.currentPanel) {
       // If the webview panel already exists reveal it
       HelloWorldPanel.currentPanel._panel.reveal(ViewColumn.One);
@@ -61,11 +62,11 @@ export class HelloWorldPanel {
           // Enable JavaScript in the webview
           enableScripts: true,
           // Restrict the webview to only load resources from the `out` and `webview-ui/build` directories
-          localResourceRoots: [Uri.joinPath(extensionUri, "out"), Uri.joinPath(extensionUri, "webview-ui/build")],
+          localResourceRoots: [Uri.joinPath(context.extensionUri, "out"), Uri.joinPath(context.extensionUri, "webview-ui/build")],
         }
       );
 
-      HelloWorldPanel.currentPanel = new HelloWorldPanel(panel, extensionUri);
+      HelloWorldPanel.currentPanel = new HelloWorldPanel(panel, context);
     }
   }
 
@@ -140,8 +141,9 @@ export class HelloWorldPanel {
 
         switch (command) {
           case "hello":
+            let settingsFile = readFileJson(getWorkspacePath(this._context) + "/parack3.json");
             // Code that should run in response to the hello message command
-            window.showInformationMessage(text);
+            window.showInformationMessage(settingsFile['modDir']);
             return;
           // Add more switch case statements here as more webview message commands
           // are created within the webview context (i.e. inside media/main.js)
