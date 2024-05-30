@@ -14,7 +14,7 @@ import { getNonce } from "../utilities/getNonce";
  */
 export class HelloWorldPanel {
   public static currentPanel: HelloWorldPanel | undefined;
-  private readonly _panel: WebviewPanel;
+  readonly _panel: WebviewPanel;
   private _disposables: Disposable[] = [];
 
   /**

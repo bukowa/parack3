@@ -12,6 +12,10 @@
       {
         "command": "hello-world.showHelloWorld",
         "title": "Hello World (Vue): Show"
+      },
+      {
+        "command": "hello-world.postMessage",
+        "title": "Hello World (Vue): Post Message"
       }
     ]
   },

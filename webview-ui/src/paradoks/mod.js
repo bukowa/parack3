@@ -1,5 +1,5 @@
-import "fs";
-import "ini";
+const fs = require("fs");
+const ini = require("ini");
 `
 version="3.2.14"
 name="Community Flavor Pack"
@@ -9,7 +9,7 @@ path="C:/Program Files (x86)/Steam/steamapps/workshop/content/1158310/2220098919
 remote_file_id="2220098919"
 `;
 
-class Mod {
+export class Mod {
   constructor(filePath) {
     const data = fs.readFileSync(filePath, "utf-8");
     if (!data) {
